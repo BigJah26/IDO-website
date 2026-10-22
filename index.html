@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>International Dueling Organization (IDO) | Dueling Grounds Clan Tournaments</title>
+<meta name="description" content="The International Dueling Organization (IDO) is the home of competitive Dueling Grounds on Roblox. Clan tournaments, live rankings, Banner Points, and the IDSC.">
+<meta property="og:title" content="International Dueling Organization (IDO)">
+<meta property="og:description" content="Clan tournaments, live rankings, and the top clans in Dueling Grounds.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0b0b10">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "International Dueling Organization",
+  "alternateName": "IDO",
+  "description": "The competitive hub for Dueling Grounds clan tournaments on Roblox."
+}
+</script>
+<style>
+  :root {
+    --bg: #0b0b10;
+    --panel: #14141c;
+    --panel-2: #1b1b26;
+    --line: #2a2a3a;
+    --text: #ececf2;
+    --muted: #9a9ab0;
+    --gold: #e8b94a;
+    --crimson: #d6334a;
+    --radius: 14px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+  /* Nav */
+  nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(11, 11, 16, 0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .logo { font-family: 'Cinzel', serif; font-weight: 800; font-size: 1.4rem; letter-spacing: 2px; color: var(--gold); }
+  .links { display: flex; gap: 24px; font-size: 0.92rem; color: var(--muted); }
+  .links a:hover { color: var(--text); }
+  .menu-btn { display: none; background: none; border: 0; color: var(--text); font-size: 1.5rem; cursor: pointer; }
+
+  /* Hero */
+  .hero {
+    padding: 110px 0 90px;
+    text-align: center;
+    background:
+      radial-gradient(ellipse at top, rgba(214, 51, 74, 0.25), transparent 60%),
+      radial-gradient(ellipse at bottom, rgba(232, 185, 74, 0.12), transparent 60%);
+    border-bottom: 1px solid var(--line);
+  }
+  .eyebrow { color: var(--gold); font-weight: 600; letter-spacing: 3px; font-size: 0.8rem; text-transform: uppercase; }
+  .hero h1 {
+    font-family: 'Cinzel', serif; font-weight: 800;
+    font-size: clamp(2.2rem, 6vw, 4.2rem); line-height: 1.1;
+    margin: 18px 0;
+  }
+  .hero h1 span { color: var(--gold); }
+  .hero p { color: var(--muted); max-width: 620px; margin: 0 auto 34px; font-size: 1.08rem; }
+  .btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    padding: 13px 26px; border-radius: 10px; font-weight: 600;
+    transition: transform .15s, opacity .15s;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-primary { background: linear-gradient(135deg, var(--crimson), #a3213a); color: #fff; }
+  .btn-ghost { border: 1px solid var(--line); background: var(--panel); }
+
+  /* Sections */
+  section { padding: 80px 0; border-bottom: 1px solid var(--line); }
+  h2 { font-family: 'Cinzel', serif; font-size: clamp(1.7rem, 4vw, 2.4rem); margin-bottom: 10px; }
+  .sub { color: var(--muted); margin-bottom: 36px; max-width: 640px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+  .card {
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 24px;
+  }
+  .card h3 { font-size: 1.1rem; margin-bottom: 8px; color: var(--gold); }
+  .card p { color: var(--muted); font-size: 0.95rem; }
+
+  /* Leaderboard */
+  .tabs { display: flex; gap: 8px; margin-bottom: 18px; flex-wrap: wrap; }
+  .tab {
+    padding: 9px 18px; border-radius: 999px; border: 1px solid var(--line);
+    background: var(--panel); color: var(--muted); cursor: pointer; font: inherit; font-weight: 600;
+  }
+  .tab.active { background: var(--gold); color: #1a1405; border-color: var(--gold); }
+  .board { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { padding: 14px 18px; text-align: left; }
+  th { background: var(--panel-2); color: var(--muted); font-size: 0.78rem; letter-spacing: 1.5px; text-transform: uppercase; }
+  tr + tr td { border-top: 1px solid var(--line); }
+  td.rank { font-weight: 700; width: 70px; }
+  td.score { text-align: right; font-weight: 700; color: var(--gold); }
+  th.score { text-align: right; }
+  .r1 { color: #f5c542; } .r2 { color: #c9ced6; } .r3 { color: #d08a4a; }
+  .note { color: var(--muted); font-size: 0.82rem; margin-top: 12px; }
+
+  /* Tournaments */
+  .event { display: flex; gap: 18px; align-items: flex-start; }
+  .date {
+    min-width: 64px; text-align: center; background: var(--panel-2);
+    border: 1px solid var(--line); border-radius: 10px; padding: 8px 6px;
+  }
+  .date .m { font-size: 0.72rem; color: var(--crimson); font-weight: 700; letter-spacing: 1px; }
+  .date .d { font-size: 1.5rem; font-weight: 700; }
+  .tag {
+    display: inline-block; font-size: 0.72rem; font-weight: 700; padding: 3px 10px;
+    border-radius: 999px; background: rgba(214, 51, 74, 0.15); color: var(--crimson); margin-bottom: 6px;
+  }
+
+  /* Rules */
+  ol.rules { counter-reset: r; list-style: none; display: grid; gap: 12px; }
+  ol.rules li {
+    counter-increment: r; background: var(--panel); border: 1px solid var(--line);
+    border-radius: 10px; padding: 16px 18px 16px 60px; position: relative; color: var(--muted);
+  }
+  ol.rules li strong { color: var(--text); }
+  ol.rules li::before {
+    content: counter(r); position: absolute; left: 18px; top: 14px;
+    font-family: 'Cinzel', serif; font-weight: 800; color: var(--gold); font-size: 1.2rem;
+  }
+
+  /* CTA + footer */
+  .cta { text-align: center; }
+  footer { padding: 34px 0; color: var(--muted); font-size: 0.85rem; text-align: center; }
+
+  @media (max-width: 760px) {
+    .links {
+      display: none; position: absolute; top: 64px; left: 0; right: 0;
+      flex-direction: column; gap: 0; background: var(--bg); border-bottom: 1px solid var(--line);
+    }
+    .links.open { display: flex; }
+    .links a { padding: 14px 20px; border-top: 1px solid var(--line); }
+    .menu-btn { display: block; }
+    th, td { padding: 12px 12px; }
+    section { padding: 60px 0; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="#" class="logo">IDO</a>
+    <button class="menu-btn" aria-label="Menu" onclick="document.querySelector('.links').classList.toggle('open')">☰</button>
+    <div class="links">
+      <a href="#about">About</a>
+      <a href="#leaderboard">Leaderboard</a>
+      <a href="#tournaments">Tournaments</a>
+      <a href="#idsc">IDSC</a>
+      <a href="#rules">Rules</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Dueling Grounds &middot; Roblox</div>
+    <h1>International Dueling <span>Organization</span></h1>
+    <p>The home of competitive Dueling Grounds. The game's biggest clans meet here for official tournaments, clan wars, and ranked battles.</p>
+    <div class="btns">
+      <a class="btn btn-primary" href="DISCORD_INVITE_LINK" target="_blank" rel="noopener">Join the Discord</a>
+      <a class="btn btn-ghost" href="#leaderboard">View Leaderboard</a>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <h2>What is IDO?</h2>
+    <p class="sub">IDO is the central hub for organized competition in Dueling Grounds. We run the tournaments, track the rankings, and keep competition fair.</p>
+    <div class="grid">
+      <div class="card"><h3>Clan Tournaments</h3><p>Official clan vs. clan events featuring the top clans in the game.</p></div>
+      <div class="card"><h3>Live Rankings</h3><p>Player standings powered by High Arbiter, updated as matches are played.</p></div>
+      <div class="card"><h3>Banner Points</h3><p>Clan standings tracked by Duke. Every clan victory raises your banner.</p></div>
+      <div class="card"><h3>Fair Play</h3><p>A dedicated staff team and the IDSC keep every match and every clan accountable.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="leaderboard">
+  <div class="wrap">
+    <h2>Leaderboard</h2>
+    <p class="sub">Current standings across IDO competition.</p>
+    <div class="tabs">
+      <button class="tab active" data-board="clans">Clans (Banner Points)</button>
+      <button class="tab" data-board="players">Players</button>
+    </div>
+    <div class="board">
+      <table>
+        <thead><tr><th>Rank</th><th id="col-name">Clan</th><th class="score" id="col-score">Banner Points</th></tr></thead>
+        <tbody id="board-body"></tbody>
+      </table>
+    </div>
+    <p class="note" id="board-note">Sample data shown. Live standings coming soon.</p>
+  </div>
+</section>
+
+<section id="tournaments">
+  <div class="wrap">
+    <h2>Tournaments</h2>
+    <p class="sub">Upcoming events. Sign-ups happen in the Discord.</p>
+    <div class="grid">
+      <div class="card event">
+        <div class="date"><div class="m">NOV</div><div class="d">08</div></div>
+        <div><span class="tag">Clan Cup</span><h3>IDO Autumn Clan Cup</h3><p>Single elimination, best of 3. Top clans only.</p></div>
+      </div>
+      <div class="card event">
+        <div class="date"><div class="m">NOV</div><div class="d">22</div></div>
+        <div><span class="tag">Open</span><h3>Open Dueling Bracket</h3><p>Any member can enter. Climb the player rankings.</p></div>
+      </div>
+      <div class="card event">
+        <div class="date"><div class="m">DEC</div><div class="d">13</div></div>
+        <div><span class="tag">Championship</span><h3>Winter Championship</h3><p>The season finale. Banner Points on the line.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="idsc">
+  <div class="wrap">
+    <h2>The IDSC</h2>
+    <p class="sub">The International Dueling Supreme Court is IDO's community-led branch that oversees clan servers and settles disputes.</p>
+    <div class="grid">
+      <div class="card"><h3>Oversight</h3><p>Monitors clan servers to make sure they follow IDO standards.</p></div>
+      <div class="card"><h3>Hearings</h3><p>Clan leaders can be summoned to present their case before the court.</p></div>
+      <div class="card"><h3>Rulings</h3><p>Decisions are final and help keep the competitive scene fair for everyone.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="rules">
+  <div class="wrap">
+    <h2>Rules</h2>
+    <p class="sub">The basics. The full rulebook lives in the Discord.</p>
+    <ol class="rules">
+      <li><strong>Respect everyone.</strong> No harassment, hate speech, or targeting other members or clans.</li>
+      <li><strong>No exploits or cheating.</strong> Any use of exploits or third-party tools means disqualification.</li>
+      <li><strong>Show up on time.</strong> Teams not ready at match time may forfeit.</li>
+      <li><strong>Staff and IDSC decisions are final.</strong> Disputes go through the proper channels.</li>
+      <li><strong>Follow Roblox and Discord terms.</strong> Always.</li>
+    </ol>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap">
+    <h2>Prove yourself in the arena</h2>
+    <p class="sub" style="margin: 0 auto 30px;">Whether you lead a clan or you're just getting started, this is where reputations are made.</p>
+    <a class="btn btn-primary" href="DISCORD_INVITE_LINK" target="_blank" rel="noopener">Join IDO on Discord</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    &copy; <span id="year"></span> International Dueling Organization. Not affiliated with Roblox Corporation.
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Optional: set these to your bots' API endpoints later to show live data.
+  const API = {
+    clans: '',    // e.g. 'https://your-duke-bot.up.railway.app/leaderboard'
+    players: ''   // e.g. 'https://your-high-arbiter.up.railway.app/leaderboard'
+  };
+
+  // Sample data shown until the API links above are filled in.
+  const SAMPLE = {
+    clans: [
+      { name: 'Clan One', score: 1240 },
+      { name: 'Clan Two', score: 1105 },
+      { name: 'Clan Three', score: 980 },
+      { name: 'Clan Four', score: 870 },
+      { name: 'Clan Five', score: 765 }
+    ],
+    players: [
+      { name: 'Player One', score: 2150 },
+      { name: 'Player Two', score: 2030 },
+      { name: 'Player Three', score: 1925 },
+      { name: 'Player Four', score: 1810 },
+      { name: 'Player Five', score: 1760 }
+    ]
+  };
+
+  const LABELS = {
+    clans: { name: 'Clan', score: 'Banner Points' },
+    players: { name: 'Player', score: 'Rating' }
+  };
+
+  function render(rows) {
+    const body = document.getElementById('board-body');
+    body.innerHTML = '';
+    rows.forEach((r, i) => {
+      const tr = document.createElement('tr');
+      const cls = i < 3 ? 'r' + (i + 1) : '';
+      tr.innerHTML = `<td class="rank ${cls}">#${i + 1}</td><td></td><td class="score">${Number(r.score).toLocaleString()}</td>`;
+      tr.children[1].textContent = r.name;
+      body.appendChild(tr);
+    });
+  }
+
+  async function load(board) {
+    document.getElementById('col-name').textContent = LABELS[board].name;
+    document.getElementById('col-score').textContent = LABELS[board].score;
+    const note = document.getElementById('board-note');
+    if (API[board]) {
+      try {
+        const res = await fetch(API[board]);
+        const data = await res.json();
+        render(data.sort((a, b) => b.score - a.score));
+        note.textContent = 'Live standings.';
+        return;
+      } catch (e) {
+        note.textContent = 'Live data unavailable right now. Showing sample data.';
+      }
+    } else {
+      note.textContent = 'Sample data shown. Live standings coming soon.';
+    }
+    render(SAMPLE[board]);
+  }
+
+  document.querySelectorAll('.tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      load(btn.dataset.board);
+    });
+  });
+
+  document.querySelectorAll('.links a').forEach(a =>
+    a.addEventListener('click', () => document.querySelector('.links').classList.remove('open'))
+  );
+
+  load('clans');
+</script>
+</body>
+</html>
