@@ -8,29 +8,38 @@
 <meta property="og:title" content="International Dueling Organization (IDO)">
 <meta property="og:description" content="Clan tournaments, live rankings, and the top clans in Dueling Grounds.">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#0b0b10">
+<meta property="og:image" content="logo.jpg">
+<meta name="theme-color" content="#0a0612">
+<link rel="icon" href="logo.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "International Dueling Organization",
   "alternateName": "IDO",
+  "logo": "logo.jpg",
   "description": "The competitive hub for Dueling Grounds clan tournaments on Roblox."
 }
 </script>
 <style>
   :root {
-    --bg: #0b0b10;
-    --panel: #14141c;
-    --panel-2: #1b1b26;
-    --line: #2a2a3a;
-    --text: #ececf2;
-    --muted: #9a9ab0;
-    --gold: #e8b94a;
-    --crimson: #d6334a;
+    --bg: #0a0612;
+    --bg-2: #0f0a1a;
+    --panel: rgba(22, 15, 36, 0.72);
+    --panel-solid: #160f24;
+    --line: rgba(160, 120, 255, 0.14);
+    --line-strong: rgba(190, 140, 255, 0.32);
+    --text: #ece8f6;
+    --muted: #a49cbc;
+    --silver: #d9d4e8;
+    --violet: #7b5cff;
+    --magenta: #c13cff;
+    --rose: #ff3d7f;
+    --ember: #ff5a4e;
+    --grad: linear-gradient(110deg, #6d5bff 0%, #b13cff 45%, #ff3d7f 80%, #ff5a4e 100%);
     --radius: 14px;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -40,107 +49,212 @@
     background: var(--bg);
     color: var(--text);
     line-height: 1.6;
+    overflow-x: hidden;
+  }
+  /* Ambient violet and crimson glow, fixed behind everything */
+  body::before {
+    content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+    background:
+      radial-gradient(900px 600px at 0% 10%, rgba(109, 91, 255, 0.16), transparent 60%),
+      radial-gradient(900px 600px at 100% 30%, rgba(255, 61, 127, 0.12), transparent 60%),
+      radial-gradient(800px 500px at 50% 110%, rgba(177, 60, 255, 0.10), transparent 60%);
   }
   a { color: inherit; text-decoration: none; }
   .wrap { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+  .grad-text {
+    background: var(--grad);
+    -webkit-background-clip: text; background-clip: text;
+    color: transparent;
+  }
+  .sr-only {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+  }
 
   /* Nav */
   nav {
     position: sticky; top: 0; z-index: 50;
-    background: rgba(11, 11, 16, 0.85);
-    backdrop-filter: blur(10px);
+    background: rgba(10, 6, 18, 0.78);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--line);
   }
   nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; }
-  .logo { font-family: 'Cinzel', serif; font-weight: 800; font-size: 1.4rem; letter-spacing: 2px; color: var(--gold); }
-  .links { display: flex; gap: 24px; font-size: 0.92rem; color: var(--muted); }
+  .logo { display: flex; align-items: center; gap: 10px; font-family: 'Cinzel', serif; font-weight: 800; font-size: 1.35rem; letter-spacing: 3px; }
+  .logo img { width: 34px; height: 34px; border-radius: 8px; object-fit: cover; }
+  .links { display: flex; gap: 26px; font-size: 0.9rem; color: var(--muted); }
+  .links a { position: relative; padding: 4px 0; transition: color .25s; }
+  .links a::after {
+    content: ""; position: absolute; left: 0; bottom: -2px; height: 2px; width: 100%;
+    background: var(--grad); border-radius: 2px;
+    transform: scaleX(0); transform-origin: left; transition: transform .3s ease;
+  }
   .links a:hover { color: var(--text); }
+  .links a:hover::after { transform: scaleX(1); }
   .menu-btn { display: none; background: none; border: 0; color: var(--text); font-size: 1.5rem; cursor: pointer; }
 
   /* Hero */
   .hero {
-    padding: 110px 0 90px;
+    padding: 70px 0 90px;
     text-align: center;
-    background:
-      radial-gradient(ellipse at top, rgba(214, 51, 74, 0.25), transparent 60%),
-      radial-gradient(ellipse at bottom, rgba(232, 185, 74, 0.12), transparent 60%);
+    position: relative;
     border-bottom: 1px solid var(--line);
   }
-  .eyebrow { color: var(--gold); font-weight: 600; letter-spacing: 3px; font-size: 0.8rem; text-transform: uppercase; }
+  .hero-logo {
+    width: min(380px, 78vw); aspect-ratio: 1; margin: 0 auto 8px; display: block;
+    object-fit: cover;
+    -webkit-mask-image: radial-gradient(circle at center, #000 52%, transparent 71%);
+            mask-image: radial-gradient(circle at center, #000 52%, transparent 71%);
+    animation: float 7s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  .eyebrow { color: var(--silver); font-weight: 600; letter-spacing: 4px; font-size: 0.78rem; text-transform: uppercase; opacity: .8; }
   .hero h1 {
     font-family: 'Cinzel', serif; font-weight: 800;
-    font-size: clamp(2.2rem, 6vw, 4.2rem); line-height: 1.1;
+    font-size: clamp(2.2rem, 6vw, 4rem); line-height: 1.1;
     margin: 18px 0;
   }
-  .hero h1 span { color: var(--gold); }
-  .hero p { color: var(--muted); max-width: 620px; margin: 0 auto 34px; font-size: 1.08rem; }
+  .hero p { color: var(--muted); max-width: 600px; margin: 14px auto 34px; font-size: 1.06rem; }
   .btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+  /* Buttons */
   .btn {
-    padding: 13px 26px; border-radius: 10px; font-weight: 600;
-    transition: transform .15s, opacity .15s;
+    position: relative; overflow: hidden; display: inline-flex; align-items: center; gap: 8px;
+    padding: 13px 28px; border-radius: 10px; font-weight: 600; letter-spacing: .3px;
+    transition: transform .25s ease, box-shadow .3s ease, background-position .6s ease, border-color .3s;
   }
-  .btn:hover { transform: translateY(-2px); }
-  .btn-primary { background: linear-gradient(135deg, var(--crimson), #a3213a); color: #fff; }
-  .btn-ghost { border: 1px solid var(--line); background: var(--panel); }
+  .btn-primary {
+    color: #fff;
+    background: linear-gradient(110deg, #6d5bff, #b13cff, #ff3d7f, #b13cff, #6d5bff);
+    background-size: 250% 100%;
+    background-position: 0% 50%;
+    box-shadow: 0 6px 22px -8px rgba(177, 60, 255, 0.55);
+  }
+  /* Light sweep across the button on hover */
+  .btn-primary::after {
+    content: ""; position: absolute; top: 0; left: -75%; width: 50%; height: 100%;
+    background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+    transform: skewX(-20deg);
+    transition: left .7s ease;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    background-position: 100% 50%;
+    box-shadow: 0 10px 30px -8px rgba(255, 61, 127, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+  }
+  .btn-primary:hover::after { left: 125%; }
+  .btn-primary:active { transform: translateY(0) scale(.98); }
+
+  .btn-ghost {
+    color: var(--text);
+    border: 1px solid transparent;
+    background:
+      linear-gradient(var(--panel-solid), var(--panel-solid)) padding-box,
+      linear-gradient(110deg, rgba(123, 92, 255, .5), rgba(255, 61, 127, .5)) border-box;
+  }
+  .btn-ghost:hover {
+    transform: translateY(-2px);
+    background:
+      linear-gradient(rgba(40, 22, 60, 1), rgba(40, 22, 60, 1)) padding-box,
+      var(--grad) border-box;
+    box-shadow: 0 8px 26px -10px rgba(177, 60, 255, 0.55);
+  }
+  .btn-ghost:active { transform: translateY(0) scale(.98); }
+  .btn .arrow { transition: transform .25s ease; }
+  .btn:hover .arrow { transform: translateX(3px); }
 
   /* Sections */
-  section { padding: 80px 0; border-bottom: 1px solid var(--line); }
-  h2 { font-family: 'Cinzel', serif; font-size: clamp(1.7rem, 4vw, 2.4rem); margin-bottom: 10px; }
+  section { padding: 84px 0; border-bottom: 1px solid var(--line); }
+  h2 { font-family: 'Cinzel', serif; font-weight: 700; font-size: clamp(1.7rem, 4vw, 2.4rem); margin-bottom: 10px; letter-spacing: 1px; }
+  .divider { width: 56px; height: 2px; background: var(--grad); border-radius: 2px; margin: 4px 0 18px; }
   .sub { color: var(--muted); margin-bottom: 36px; max-width: 640px; }
   .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
   .card {
+    position: relative;
     background: var(--panel); border: 1px solid var(--line);
     border-radius: var(--radius); padding: 24px;
+    backdrop-filter: blur(6px);
+    transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease;
   }
-  .card h3 { font-size: 1.1rem; margin-bottom: 8px; color: var(--gold); }
+  .card:hover {
+    transform: translateY(-3px);
+    border-color: var(--line-strong);
+    box-shadow: 0 14px 34px -18px rgba(177, 60, 255, 0.5);
+  }
+  .card h3 { font-size: 1.08rem; margin-bottom: 8px; color: var(--silver); font-weight: 600; }
+  .card h3::before {
+    content: "\2726"; margin-right: 8px; font-size: .85em;
+    background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
   .card p { color: var(--muted); font-size: 0.95rem; }
 
   /* Leaderboard */
   .tabs { display: flex; gap: 8px; margin-bottom: 18px; flex-wrap: wrap; }
   .tab {
     padding: 9px 18px; border-radius: 999px; border: 1px solid var(--line);
-    background: var(--panel); color: var(--muted); cursor: pointer; font: inherit; font-weight: 600;
+    background: var(--panel); color: var(--muted); cursor: pointer; font: inherit; font-weight: 600; font-size: .9rem;
+    transition: color .25s, border-color .25s, transform .2s, box-shadow .3s;
   }
-  .tab.active { background: var(--gold); color: #1a1405; border-color: var(--gold); }
+  .tab:hover { color: var(--text); border-color: var(--line-strong); transform: translateY(-1px); }
+  .tab.active {
+    color: #fff; border-color: transparent;
+    background: var(--grad);
+    box-shadow: 0 6px 20px -8px rgba(255, 61, 127, 0.55);
+  }
   .board { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
   table { width: 100%; border-collapse: collapse; }
   th, td { padding: 14px 18px; text-align: left; }
-  th { background: var(--panel-2); color: var(--muted); font-size: 0.78rem; letter-spacing: 1.5px; text-transform: uppercase; }
+  th { background: rgba(123, 92, 255, 0.07); color: var(--muted); font-size: 0.76rem; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 600; }
+  tbody tr { transition: background .2s; }
+  tbody tr:hover { background: rgba(177, 60, 255, 0.06); }
   tr + tr td { border-top: 1px solid var(--line); }
-  td.rank { font-weight: 700; width: 70px; }
-  td.score { text-align: right; font-weight: 700; color: var(--gold); }
+  td.rank { font-weight: 700; width: 70px; color: var(--muted); }
+  td.score { text-align: right; font-weight: 700; color: var(--silver); font-variant-numeric: tabular-nums; }
   th.score { text-align: right; }
-  .r1 { color: #f5c542; } .r2 { color: #c9ced6; } .r3 { color: #d08a4a; }
+  .r1 { color: #ff6b9d !important; } .r2 { color: #c58bff !important; } .r3 { color: #8f86ff !important; }
   .note { color: var(--muted); font-size: 0.82rem; margin-top: 12px; }
 
   /* Tournaments */
   .event { display: flex; gap: 18px; align-items: flex-start; }
   .date {
-    min-width: 64px; text-align: center; background: var(--panel-2);
-    border: 1px solid var(--line); border-radius: 10px; padding: 8px 6px;
+    min-width: 64px; text-align: center; border-radius: 10px; padding: 8px 6px;
+    border: 1px solid var(--line-strong);
+    background: rgba(123, 92, 255, 0.08);
   }
-  .date .m { font-size: 0.72rem; color: var(--crimson); font-weight: 700; letter-spacing: 1px; }
-  .date .d { font-size: 1.5rem; font-weight: 700; }
+  .date .m { font-size: 0.7rem; color: var(--rose); font-weight: 700; letter-spacing: 1.5px; }
+  .date .d { font-size: 1.5rem; font-weight: 700; font-family: 'Cinzel', serif; }
   .tag {
-    display: inline-block; font-size: 0.72rem; font-weight: 700; padding: 3px 10px;
-    border-radius: 999px; background: rgba(214, 51, 74, 0.15); color: var(--crimson); margin-bottom: 6px;
+    display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 3px 10px; letter-spacing: .5px;
+    border-radius: 999px; background: rgba(193, 60, 255, 0.14); color: #d99bff; margin-bottom: 6px;
   }
+  .event h3::before { content: none; }
 
   /* Rules */
   ol.rules { counter-reset: r; list-style: none; display: grid; gap: 12px; }
   ol.rules li {
     counter-increment: r; background: var(--panel); border: 1px solid var(--line);
     border-radius: 10px; padding: 16px 18px 16px 60px; position: relative; color: var(--muted);
+    transition: border-color .3s;
   }
+  ol.rules li:hover { border-color: var(--line-strong); }
   ol.rules li strong { color: var(--text); }
   ol.rules li::before {
-    content: counter(r); position: absolute; left: 18px; top: 14px;
-    font-family: 'Cinzel', serif; font-weight: 800; color: var(--gold); font-size: 1.2rem;
+    content: counter(r); position: absolute; left: 20px; top: 13px;
+    font-family: 'Cinzel', serif; font-weight: 800; font-size: 1.25rem;
+    background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent;
   }
 
   /* CTA + footer */
-  .cta { text-align: center; }
+  .cta { text-align: center; position: relative; }
+  .cta .divider { margin: 4px auto 18px; }
   footer { padding: 34px 0; color: var(--muted); font-size: 0.85rem; text-align: center; }
+
+  /* Fade-in on scroll */
+  .reveal { opacity: 0; transform: translateY(14px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.in { opacity: 1; transform: none; }
 
   @media (max-width: 760px) {
     .links {
@@ -149,9 +263,16 @@
     }
     .links.open { display: flex; }
     .links a { padding: 14px 20px; border-top: 1px solid var(--line); }
+    .links a::after { display: none; }
     .menu-btn { display: block; }
     th, td { padding: 12px 12px; }
     section { padding: 60px 0; }
+    .hero { padding: 40px 0 70px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .reveal { opacity: 1; transform: none; }
   }
 </style>
 </head>
@@ -159,7 +280,7 @@
 
 <nav>
   <div class="wrap">
-    <a href="#" class="logo">IDO</a>
+    <a href="#" class="logo"><img src="logo.jpg" alt="" onerror="this.remove()"><span class="grad-text">IDO</span></a>
     <button class="menu-btn" aria-label="Menu" onclick="document.querySelector('.links').classList.toggle('open')">☰</button>
     <div class="links">
       <a href="#about">About</a>
@@ -173,19 +294,22 @@
 
 <header class="hero">
   <div class="wrap">
+    <img class="hero-logo" src="logo.jpg" alt="International Dueling Organization logo"
+         onerror="this.remove(); document.getElementById('hero-title').classList.remove('sr-only');">
+    <h1 id="hero-title" class="sr-only">International Dueling <span class="grad-text">Organization</span></h1>
     <div class="eyebrow">Dueling Grounds &middot; Roblox</div>
-    <h1>International Dueling <span>Organization</span></h1>
     <p>The home of competitive Dueling Grounds. The game's biggest clans meet here for official tournaments, clan wars, and ranked battles.</p>
     <div class="btns">
-      <a class="btn btn-primary" href="https://discord.gg/KpP8Kpd68" target="_blank" rel="noopener">Join the Discord</a>
+      <a class="btn btn-primary" href="https://discord.gg/gZj7TFxwW" target="_blank" rel="noopener">Join the Discord <span class="arrow">&rarr;</span></a>
       <a class="btn btn-ghost" href="#leaderboard">View Leaderboard</a>
     </div>
   </div>
 </header>
 
 <section id="about">
-  <div class="wrap">
+  <div class="wrap reveal">
     <h2>What is IDO?</h2>
+    <div class="divider"></div>
     <p class="sub">IDO is the central hub for organized competition in Dueling Grounds. We run the tournaments, track the rankings, and keep competition fair.</p>
     <div class="grid">
       <div class="card"><h3>Clan Tournaments</h3><p>Official clan vs. clan events featuring the top clans in the game.</p></div>
@@ -197,8 +321,9 @@
 </section>
 
 <section id="leaderboard">
-  <div class="wrap">
+  <div class="wrap reveal">
     <h2>Leaderboard</h2>
+    <div class="divider"></div>
     <p class="sub">Current standings across IDO competition.</p>
     <div class="tabs">
       <button class="tab active" data-board="clans">Clans (Banner Points)</button>
@@ -215,8 +340,9 @@
 </section>
 
 <section id="tournaments">
-  <div class="wrap">
+  <div class="wrap reveal">
     <h2>Tournaments</h2>
+    <div class="divider"></div>
     <p class="sub">Upcoming events. Sign-ups happen in the Discord.</p>
     <div class="grid">
       <div class="card event">
@@ -236,8 +362,9 @@
 </section>
 
 <section id="idsc">
-  <div class="wrap">
+  <div class="wrap reveal">
     <h2>The IDSC</h2>
+    <div class="divider"></div>
     <p class="sub">The International Dueling Supreme Court is IDO's community-led branch that oversees clan servers and settles disputes.</p>
     <div class="grid">
       <div class="card"><h3>Oversight</h3><p>Monitors clan servers to make sure they follow IDO standards.</p></div>
@@ -248,8 +375,9 @@
 </section>
 
 <section id="rules">
-  <div class="wrap">
+  <div class="wrap reveal">
     <h2>Rules</h2>
+    <div class="divider"></div>
     <p class="sub">The basics. The full rulebook lives in the Discord.</p>
     <ol class="rules">
       <li><strong>Respect everyone.</strong> No harassment, hate speech, or targeting other members or clans.</li>
@@ -262,10 +390,11 @@
 </section>
 
 <section class="cta">
-  <div class="wrap">
-    <h2>Prove yourself in the arena</h2>
+  <div class="wrap reveal">
+    <h2>Prove yourself in the <span class="grad-text">arena</span></h2>
+    <div class="divider"></div>
     <p class="sub" style="margin: 0 auto 30px;">Whether you lead a clan or you're just getting started, this is where reputations are made.</p>
-    <a class="btn btn-primary" href="https://discord.gg/KpP8Kpd68" target="_blank" rel="noopener">Join IDO on Discord</a>
+    <a class="btn btn-primary" href="https://discord.gg/gZj7TFxwW" target="_blank" rel="noopener">Join IDO on Discord <span class="arrow">&rarr;</span></a>
   </div>
 </section>
 
@@ -350,6 +479,12 @@
   document.querySelectorAll('.links a').forEach(a =>
     a.addEventListener('click', () => document.querySelector('.links').classList.remove('open'))
   );
+
+  // Fade sections in as they scroll into view
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
   load('clans');
 </script>
