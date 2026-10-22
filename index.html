@@ -122,47 +122,71 @@
 
   /* Buttons */
   .btn {
-    position: relative; overflow: hidden; display: inline-flex; align-items: center; gap: 8px;
+    position: relative; overflow: hidden; isolation: isolate; display: inline-flex; align-items: center; gap: 8px;
     padding: 13px 28px; border-radius: 10px; font-weight: 600; letter-spacing: .3px;
     transition: transform .25s ease, box-shadow .3s ease, background-position .6s ease, border-color .3s;
   }
+  /* Hollow button with an animated gradient outline */
   .btn-primary {
     color: #fff;
-    background: linear-gradient(110deg, #6d5bff, #b13cff, #ff3d7f, #b13cff, #6d5bff);
-    background-size: 250% 100%;
-    background-position: 0% 50%;
-    box-shadow: 0 6px 22px -8px rgba(177, 60, 255, 0.55);
+    background: rgba(22, 15, 36, 0.55);
+    isolation: isolate;
   }
-  /* Light sweep across the button on hover */
-  .btn-primary::after {
-    content: ""; position: absolute; top: 0; left: -75%; width: 50%; height: 100%;
-    background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.28), transparent);
-    transform: skewX(-20deg);
-    transition: left .7s ease;
+  .btn-primary::before,
+  .tab.active::before {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1.5px;
+    background: linear-gradient(90deg, #6d5bff, #b13cff, #ff3d7f, #ff5a4e, #b13cff, #6d5bff);
+    background-size: 300% 100%;
+    animation: flow 4s linear infinite;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask-composite: exclude;
+    pointer-events: none; z-index: -1;
+  }
+  @keyframes flow {
+    from { background-position: 0% 50%; }
+    to { background-position: 300% 50%; }
   }
   .btn-primary:hover {
     transform: translateY(-2px);
-    background-position: 100% 50%;
-    box-shadow: 0 10px 30px -8px rgba(255, 61, 127, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+    background: rgba(123, 92, 255, 0.10);
+    box-shadow: 0 8px 28px -10px rgba(255, 61, 127, 0.55);
   }
-  .btn-primary:hover::after { left: 125%; }
-  .btn-primary:active { transform: translateY(0) scale(.98); }
+  .btn-primary:hover::before { animation-duration: 1.6s; }
+
+  /* Click effect: ripple from the click point plus a bright pulse */
+  .ripple {
+    position: absolute; border-radius: 50%; pointer-events: none; z-index: -1;
+    width: 16px; height: 16px; margin: -8px 0 0 -8px;
+    background: radial-gradient(circle, rgba(255, 120, 200, 0.55), rgba(177, 60, 255, 0.25) 45%, transparent 70%);
+    transform: scale(0);
+    animation: ripple .55s ease-out forwards;
+  }
+  @keyframes ripple {
+    to { transform: scale(22); opacity: 0; }
+  }
+  .btn.clicked, .tab.clicked { animation: press .4s ease; }
+  .btn.clicked { box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15), 0 0 26px -2px rgba(193, 60, 255, 0.7); }
+  .btn-primary.clicked::before { animation-duration: .6s; filter: brightness(1.4); }
+  @keyframes press {
+    0% { transform: scale(1); }
+    35% { transform: scale(.95); }
+    100% { transform: scale(1); }
+  }
 
   .btn-ghost {
     color: var(--text);
-    border: 1px solid transparent;
-    background:
-      linear-gradient(var(--panel-solid), var(--panel-solid)) padding-box,
-      linear-gradient(110deg, rgba(123, 92, 255, .5), rgba(255, 61, 127, .5)) border-box;
+    border: 1px solid var(--line-strong);
+    background: rgba(22, 15, 36, 0.4);
   }
   .btn-ghost:hover {
     transform: translateY(-2px);
-    background:
-      linear-gradient(rgba(40, 22, 60, 1), rgba(40, 22, 60, 1)) padding-box,
-      var(--grad) border-box;
-    box-shadow: 0 8px 26px -10px rgba(177, 60, 255, 0.55);
+    border-color: rgba(220, 170, 255, 0.55);
+    background: rgba(123, 92, 255, 0.08);
+    box-shadow: 0 8px 26px -12px rgba(177, 60, 255, 0.5);
   }
-  .btn-ghost:active { transform: translateY(0) scale(.98); }
+
   .btn .arrow { transition: transform .25s ease; }
   .btn:hover .arrow { transform: translateX(3px); }
 
@@ -199,10 +223,11 @@
     transition: color .25s, border-color .25s, transform .2s, box-shadow .3s;
   }
   .tab:hover { color: var(--text); border-color: var(--line-strong); transform: translateY(-1px); }
+  .tab { position: relative; overflow: hidden; isolation: isolate; }
   .tab.active {
     color: #fff; border-color: transparent;
-    background: var(--grad);
-    box-shadow: 0 6px 20px -8px rgba(255, 61, 127, 0.55);
+    background: rgba(123, 92, 255, 0.10);
+    box-shadow: 0 6px 20px -10px rgba(255, 61, 127, 0.5);
   }
   .board { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
   table { width: 100%; border-collapse: collapse; }
@@ -286,7 +311,7 @@
       <a href="#about">About</a>
       <a href="#leaderboard">Leaderboard</a>
       <a href="#tournaments">Tournaments</a>
-      <a href="#idsc">IDSC</a>
+      <a href="#staff">Staff</a>
       <a href="#rules">Rules</a>
     </div>
   </div>
@@ -335,7 +360,7 @@
         <tbody id="board-body"></tbody>
       </table>
     </div>
-    <p class="note" id="board-note">Sample data shown. Live standings coming soon.</p>
+    <p class="note" id="board-note">The season has not started yet. No Banner Points have been awarded.</p>
   </div>
 </section>
 
@@ -361,15 +386,16 @@
   </div>
 </section>
 
-<section id="idsc">
+<section id="staff">
   <div class="wrap reveal">
-    <h2>The IDSC</h2>
+    <h2>Staff</h2>
     <div class="divider"></div>
-    <p class="sub">The International Dueling Supreme Court is IDO's community-led branch that oversees clan servers and settles disputes.</p>
+    <p class="sub">The team that runs IDO, hosts the events, and keeps competition fair.</p>
     <div class="grid">
-      <div class="card"><h3>Oversight</h3><p>Monitors clan servers to make sure they follow IDO standards.</p></div>
-      <div class="card"><h3>Hearings</h3><p>Clan leaders can be summoned to present their case before the court.</p></div>
-      <div class="card"><h3>Rulings</h3><p>Decisions are final and help keep the competitive scene fair for everyone.</p></div>
+      <div class="card"><h3>Leadership</h3><p>Sets the direction for IDO and oversees every part of the organization.</p></div>
+      <div class="card"><h3>Tournament Hosts</h3><p>Organize brackets, run matches, and report results for every event.</p></div>
+      <div class="card"><h3>Moderators</h3><p>Keep the server safe, respectful, and focused on competition.</p></div>
+      <div class="card"><h3>The IDSC</h3><p>The International Dueling Supreme Court oversees clan servers and rules on disputes. Clan leaders may be summoned to present their case.</p></div>
     </div>
   </div>
 </section>
@@ -416,11 +442,11 @@
   // Sample data shown until the API links above are filled in.
   const SAMPLE = {
     clans: [
-      { name: 'Clan One', score: 1240 },
-      { name: 'Clan Two', score: 1105 },
-      { name: 'Clan Three', score: 980 },
-      { name: 'Clan Four', score: 870 },
-      { name: 'Clan Five', score: 765 }
+      { name: 'Clan One', score: 0 },
+      { name: 'Clan Two', score: 0 },
+      { name: 'Clan Three', score: 0 },
+      { name: 'Clan Four', score: 0 },
+      { name: 'Clan Five', score: 0 }
     ],
     players: [
       { name: 'Player One', score: 2150 },
@@ -463,7 +489,9 @@
         note.textContent = 'Live data unavailable right now. Showing sample data.';
       }
     } else {
-      note.textContent = 'Sample data shown. Live standings coming soon.';
+      note.textContent = board === 'clans'
+        ? 'The season has not started yet. No Banner Points have been awarded.'
+        : 'Sample data shown. Live standings coming soon.';
     }
     render(SAMPLE[board]);
   }
@@ -486,7 +514,41 @@
   }, { threshold: 0.12 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
+  // Ripple + press animation on click, with a short delay before navigating
+  function playClick(el, e) {
+    const r = el.getBoundingClientRect();
+    const dot = document.createElement('span');
+    dot.className = 'ripple';
+    dot.style.left = (e.clientX ? e.clientX - r.left : r.width / 2) + 'px';
+    dot.style.top = (e.clientY ? e.clientY - r.top : r.height / 2) + 'px';
+    el.appendChild(dot);
+    el.classList.remove('clicked'); void el.offsetWidth; el.classList.add('clicked');
+    setTimeout(() => { dot.remove(); el.classList.remove('clicked'); }, 600);
+  }
+  const CLICK_DELAY = 380;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  document.querySelectorAll('.btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      if (reduceMotion || e.ctrlKey || e.metaKey || e.shiftKey) return;
+      e.preventDefault();
+      playClick(btn, e);
+      const href = btn.getAttribute('href');
+      setTimeout(() => {
+        if (href.startsWith('#')) {
+          document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+        } else if (btn.target === '_blank') {
+          window.open(href, '_blank', 'noopener');
+        } else {
+          window.location.href = href;
+        }
+      }, CLICK_DELAY);
+    });
+  });
+  document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', e => playClick(t, e)));
+
   load('clans');
 </script>
 </body>
 </html>
+
