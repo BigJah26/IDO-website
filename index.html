@@ -274,6 +274,19 @@
   }
   .event h3::before { content: none; }
 
+  .empty {
+    text-align: center; padding: 44px 24px;
+    border: 1px dashed var(--line-strong); border-radius: var(--radius);
+    background: rgba(22, 15, 36, 0.45);
+  }
+  .empty-icon {
+    font-size: 1.6rem; margin-bottom: 6px;
+    background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .empty h3 { font-size: 1.1rem; color: var(--silver); margin-bottom: 6px; font-weight: 600; }
+  .empty p { color: var(--muted); font-size: .95rem; max-width: 440px; margin: 0 auto; }
+  #tournament-list:empty { display: none; }
+
   /* Rules */
   ol.rules { counter-reset: r; list-style: none; display: grid; gap: 12px; }
   ol.rules li {
@@ -387,19 +400,11 @@
     <h2>Tournaments</h2>
     <div class="divider"></div>
     <p class="sub">Upcoming events. Sign-ups happen in the Discord.</p>
-    <div class="grid">
-      <div class="card event">
-        <div class="date"><div class="m">NOV</div><div class="d">08</div></div>
-        <div><span class="tag">Clan Cup</span><h3>IDO Autumn Clan Cup</h3><p>Single elimination, best of 3. Top clans only.</p></div>
-      </div>
-      <div class="card event">
-        <div class="date"><div class="m">NOV</div><div class="d">22</div></div>
-        <div><span class="tag">Open</span><h3>Open Dueling Bracket</h3><p>Any member can enter. Climb the player rankings.</p></div>
-      </div>
-      <div class="card event">
-        <div class="date"><div class="m">DEC</div><div class="d">13</div></div>
-        <div><span class="tag">Championship</span><h3>Winter Championship</h3><p>The season finale. Banner Points on the line.</p></div>
-      </div>
+    <div class="grid" id="tournament-list"></div>
+    <div class="empty" id="tournament-empty">
+      <div class="empty-icon">&#10022;</div>
+      <h3>No tournaments scheduled yet</h3>
+      <p>New events will appear here as soon as they're announced. Join the Discord to be the first to know.</p>
     </div>
   </div>
 </section>
@@ -454,7 +459,8 @@
   // Optional: set these to your bots' API endpoints later to show live data.
   const API = {
     clans: '',    // e.g. 'https://your-duke-bot.up.railway.app/leaderboard'
-    players: ''   // e.g. 'https://your-high-arbiter.up.railway.app/leaderboard'
+    players: '',  // e.g. 'https://your-high-arbiter.up.railway.app/leaderboard'
+    tournaments: '' // e.g. 'https://your-duke-bot.up.railway.app/tournaments'
   };
 
   // Sample data shown until the API links above are filled in.
@@ -564,6 +570,37 @@
     });
   });
   document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', e => playClick(t, e)));
+
+  // Tournaments come from Duke. Expected format:
+  // [{ "name": "Autumn Clan Cup", "date": "2026-11-08", "type": "Clan Cup", "description": "Best of 3." }]
+  const MONTHS = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+  async function loadTournaments() {
+    const list = document.getElementById('tournament-list');
+    const empty = document.getElementById('tournament-empty');
+    if (!API.tournaments) return;
+    try {
+      const res = await fetch(API.tournaments);
+      const events = await res.json();
+      if (!Array.isArray(events) || events.length === 0) return;
+      events.sort((x, y) => String(x.date).localeCompare(String(y.date)));
+      events.forEach(ev => {
+        const [, m, d] = String(ev.date || '').split('-');
+        const card = document.createElement('div');
+        card.className = 'card event';
+        card.innerHTML = `<div class="date"><div class="m"></div><div class="d"></div></div>
+          <div><span class="tag"></span><h3></h3><p></p></div>`;
+        card.querySelector('.m').textContent = MONTHS[Number(m) - 1] || 'TBA';
+        card.querySelector('.d').textContent = d || '--';
+        const tag = card.querySelector('.tag');
+        if (ev.type) tag.textContent = ev.type; else tag.remove();
+        card.querySelector('h3').textContent = ev.name || 'Tournament';
+        card.querySelector('p').textContent = ev.description || '';
+        list.appendChild(card);
+      });
+      empty.style.display = 'none';
+    } catch (e) { /* keep the empty state if Duke is unreachable */ }
+  }
+  loadTournaments();
 
   load('clans');
 </script>
