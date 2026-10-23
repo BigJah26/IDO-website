@@ -3,20 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tournaments | International Dueling Organization</title>
-<meta name="description" content="Upcoming and past IDO Dueling Grounds tournaments.">
-<meta property="og:title" content="Tournaments | International Dueling Organization">
-<meta property="og:description" content="Upcoming and past IDO Dueling Grounds tournaments.">
+<title>Leaderboard | International Dueling Organization</title>
+<meta name="description" content="Live clan Banner Points and player rankings for IDO Dueling Grounds competition.">
+<meta property="og:title" content="Leaderboard | International Dueling Organization">
+<meta property="og:description" content="Live clan Banner Points and player rankings for IDO Dueling Grounds competition.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="logo.jpg">
 <meta name="theme-color" content="#0a0612">
-<link rel="icon" href="logo.jpg">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
-<body data-page="tournaments">
+<body data-page="leaderboard">
 <div class="site-bg" aria-hidden="true"></div>
 
 <nav>
@@ -35,9 +37,9 @@
 
 <header class="page-hero">
   <div class="wrap">
-    <div class="eyebrow">Events</div>
-    <h1>Tournaments</h1>
-    <p>Official IDO events. Sign-ups happen in the Discord.</p>
+    <div class="eyebrow">Standings</div>
+    <h1>Leaderboard</h1>
+    <p>Where every clan and dueler stands in IDO competition.</p>
     <div class="divider"></div>
   </div>
 </header>
@@ -45,22 +47,25 @@
 <section>
   <div class="wrap reveal stack">
     <div>
-      <h2 class="small">Upcoming</h2>
-      <div class="divider"></div>
-      <div class="grid" id="tournament-list"></div>
-      <div class="empty" id="tournament-empty">
-        <div class="empty-icon">&#10022;</div>
-        <h3>No tournaments scheduled yet</h3>
-        <p>New events will appear here as soon as they're announced. Join the Discord to be the first to know.</p>
+      <div class="tabs">
+        <button class="tab active" data-board="clans">Clans (Banner Points)</button>
+        <button class="tab" data-board="players">Players</button>
       </div>
+      <div class="board">
+        <table>
+          <thead><tr><th>Rank</th><th id="col-name">Clan</th><th class="score" id="col-score">Banner Points</th></tr></thead>
+          <tbody id="board-body"></tbody>
+        </table>
+      </div>
+      <p class="note" id="board-note">The season has not started yet. No Banner Points have been awarded.</p>
     </div>
 
     <div>
-      <h2 class="small">Past Results</h2>
+      <h2 class="small">How rankings work</h2>
       <div class="divider"></div>
-      <div class="empty compact">
-        <h3>No results yet</h3>
-        <p>Winners and final standings will be posted here after the first tournament.</p>
+      <div class="grid">
+        <div class="card"><h3>Banner Points</h3><p>Clans earn Banner Points through official IDO competition. Duke tracks every clan result, so the clan standings update as matches are recorded.</p></div>
+        <div class="card"><h3>Player Ratings</h3><p>Individual duelers are ranked by High Arbiter, which updates player ratings as matches are played.</p></div>
       </div>
     </div>
   </div>
