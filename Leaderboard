@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leaderboard | International Dueling Organization</title>
+<meta name="description" content="Live clan Banner Points and player rankings for IDO Dueling Grounds competition.">
+<meta property="og:title" content="Leaderboard | International Dueling Organization">
+<meta property="og:description" content="Live clan Banner Points and player rankings for IDO Dueling Grounds competition.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="logo.jpg">
+<meta name="theme-color" content="#0a0612">
+<link rel="icon" href="logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-page="leaderboard">
+<div class="site-bg" aria-hidden="true"></div>
+
+<nav>
+  <div class="wrap">
+    <a href="./" class="logo"><img src="logo.jpg" alt="" onerror="this.remove()"><span class="grad-text">IDO</span></a>
+    <button class="menu-btn" aria-label="Menu">&#9776;</button>
+    <div class="links">
+      <a href="./" data-page="home">Home</a>
+      <a href="leaderboard.html" data-page="leaderboard">Leaderboard</a>
+      <a href="tournaments.html" data-page="tournaments">Tournaments</a>
+      <a href="staff.html" data-page="staff">Staff</a>
+      <a href="rules.html" data-page="rules">Rules</a>
+    </div>
+  </div>
+</nav>
+
+<header class="page-hero">
+  <div class="wrap">
+    <div class="eyebrow">Standings</div>
+    <h1>Leaderboard</h1>
+    <p>Where every clan and dueler stands in IDO competition.</p>
+    <div class="divider"></div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap reveal stack">
+    <div>
+      <div class="tabs">
+        <button class="tab active" data-board="clans">Clans (Banner Points)</button>
+        <button class="tab" data-board="players">Players</button>
+      </div>
+      <div class="board">
+        <table>
+          <thead><tr><th>Rank</th><th id="col-name">Clan</th><th class="score" id="col-score">Banner Points</th></tr></thead>
+          <tbody id="board-body"></tbody>
+        </table>
+      </div>
+      <p class="note" id="board-note">The season has not started yet. No Banner Points have been awarded.</p>
+    </div>
+
+    <div>
+      <h2 class="small">How rankings work</h2>
+      <div class="divider"></div>
+      <div class="grid">
+        <div class="card"><h3>Banner Points</h3><p>Clans earn Banner Points through official IDO competition. Duke tracks every clan result, so the clan standings update as matches are recorded.</p></div>
+        <div class="card"><h3>Player Ratings</h3><p>Individual duelers are ranked by High Arbiter, which updates player ratings as matches are played.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap reveal">
+    <h2>Prove yourself in the <span class="grad-text">arena</span></h2>
+    <div class="divider"></div>
+    <p class="sub" style="margin: 0 auto 30px;">Whether you lead a clan or you're just getting started, this is where reputations are made.</p>
+    <a class="btn btn-primary" href="https://discord.gg/gZj7TFxwW" target="_blank" rel="noopener">Join IDO on Discord <span class="arrow">&rarr;</span></a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    &copy; <span data-year></span> International Dueling Organization. Not affiliated with Roblox Corporation.
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
