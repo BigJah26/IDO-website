@@ -165,41 +165,16 @@ nav .wrap { display: flex; align-items: center; justify-content: space-between; 
   100% { transform: scale(1); }
 }
 
-/* Bracket buttons: every button except the hero's main one.
-   Only the left and right edges show; on hover the outline closes in
-   from both sides and the inside glows. Left side violet, right side crimson. */
-.btn-ghost,
-.cta .btn-primary {
+.btn-ghost {
   color: var(--text);
-  border: 0;
-  background: transparent;
-  box-shadow: none;
-  transition: transform .25s ease, box-shadow .5s ease, background .5s ease;
+  border: 1px solid var(--line-strong);
+  background: rgba(22, 15, 36, 0.4);
 }
-.cta .btn-primary::before { content: none; }
-.btn-ghost::after,
-.cta .btn-primary::after {
-  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 2px;
-  background: linear-gradient(90deg, #6d5bff, #b13cff 50%, #ff3d7f);
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-          mask-composite: exclude;
-  clip-path: polygon(0 0, 14px 0, 14px 100%, calc(100% - 14px) 100%, calc(100% - 14px) 0, 100% 0, 100% 100%, 0 100%);
-  transition: clip-path .5s ease;
-  pointer-events: none;
-}
-.btn-ghost:hover::after,
-.cta .btn-primary:hover::after,
-.btn-ghost.clicked::after,
-.cta .btn-primary.clicked::after {
-  clip-path: polygon(0 0, 50% 0, 50% 100%, 50% 100%, 50% 0, 100% 0, 100% 100%, 0 100%);
-}
-.btn-ghost:hover,
-.cta .btn-primary:hover {
+.btn-ghost:hover {
   transform: translateY(-2px);
-  background: rgba(123, 92, 255, 0.06);
-  box-shadow: inset 0 0 22px rgba(177, 60, 255, 0.35), 0 8px 26px -14px rgba(255, 61, 127, 0.5);
+  border-color: rgba(220, 170, 255, 0.55);
+  background: rgba(123, 92, 255, 0.08);
+  box-shadow: 0 8px 26px -12px rgba(177, 60, 255, 0.5);
 }
 
 .btn .arrow { transition: transform .25s ease; }
