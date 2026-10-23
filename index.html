@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Staff | International Dueling Organization</title>
-<meta name="description" content="Meet the IDO staff team: leadership, the Tournament Committee, Arbiters, the IDSC, and the Media Team.">
-<meta property="og:title" content="Staff | International Dueling Organization">
-<meta property="og:description" content="Meet the IDO staff team: leadership, the Tournament Committee, Arbiters, the IDSC, and the Media Team.">
+<title>International Dueling Organization (IDO) | Dueling Grounds Clan Tournaments</title>
+<meta name="description" content="The International Dueling Organization (IDO) is the home of competitive Dueling Grounds on Roblox. Clan tournaments, live rankings, Banner Points, and the IDSC.">
+<meta property="og:title" content="International Dueling Organization (IDO) | Dueling Grounds Clan Tournaments">
+<meta property="og:description" content="The International Dueling Organization (IDO) is the home of competitive Dueling Grounds on Roblox. Clan tournaments, live rankings, Banner Points, and the IDSC.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="logo.jpg">
 <meta name="theme-color" content="#0a0612">
@@ -15,8 +15,19 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "International Dueling Organization",
+  "alternateName": "IDO",
+  "url": "https://internationaldueling.com",
+  "logo": "https://internationaldueling.com/logo.jpg",
+  "description": "The competitive hub for Dueling Grounds clan tournaments on Roblox."
+}
+</script>
 </head>
-<body data-page="staff">
+<body data-page="home">
 <div class="site-bg" aria-hidden="true"></div>
 
 <nav>
@@ -33,56 +44,16 @@
   </div>
 </nav>
 
-<header class="page-hero">
+<header class="hero">
   <div class="wrap">
-    <div class="eyebrow">The Team</div>
-    <h1>Staff</h1>
-    <p>The team that runs IDO, hosts the events, and keeps competition fair.</p>
-    <div class="divider"></div>
+    <img class="hero-logo" src="logo.jpg" alt="International Dueling Organization logo"
+         onerror="this.remove(); document.getElementById('hero-title').classList.remove('sr-only');">
+    <h1 id="hero-title" class="sr-only">International Dueling <span class="grad-text">Organization</span></h1>
+    <div class="eyebrow">Dueling Grounds &middot; Roblox</div>
+    <p>The home of competitive Dueling Grounds. The game's biggest clans meet here for official tournaments, clan wars, and ranked battles.</p>
+    <div class="btns">
+      <a class="btn btn-primary" href="https://discord.gg/gZj7TFxwW" target="_blank" rel="noopener">Join the Organization <span class="arrow">&rarr;</span></a>
+      <a class="btn btn-ghost" href="leaderboard.html">View Leaderboard</a>
+    </div>
   </div>
 </header>
-
-<section>
-  <div class="wrap reveal stack">
-    <div>
-      <h2 class="small">Roles</h2>
-      <div class="divider"></div>
-      <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
-        <div class="card"><h3>Leadership</h3><p>Zad, the owner, and Bruhman, the chairman, lead the server. They set the direction for IDO and oversee every part of the organization.</p></div>
-        <div class="card"><h3>Tournament Committee</h3><p>Organize brackets, run matches, and report results for every event.</p></div>
-        <div class="card"><h3>Arbiters</h3><p>Keep the server safe, respectful, and focused on competition.</p></div>
-        <div class="card"><h3>The IDSC</h3><p>The International Dueling Supreme Court oversees clan servers and rules on disputes. Clan leaders may be summoned to present their case.</p></div>
-        <div class="card"><h3>Media Team</h3><p>Stream IDO matches and create the art and graphics that represent the organization.</p></div>
-      </div>
-    </div>
-
-    <div>
-      <div class="card callout">
-        <div>
-          <h3>Need to reach staff?</h3>
-          <p>Questions, reports, and appeals are handled in the Discord.</p>
-        </div>
-        <a class="btn btn-ghost" href="https://discord.gg/gZj7TFxwW" target="_blank" rel="noopener">Contact Staff</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="cta">
-  <div class="wrap reveal">
-    <h2>Prove yourself in the <span class="grad-text">arena</span></h2>
-    <div class="divider"></div>
-    <p class="sub" style="margin: 0 auto 30px;">Whether you lead a clan or you're just getting started, this is where reputations are made.</p>
-    <a class="btn btn-primary" href="https://discord.gg/gZj7TFxwW" target="_blank" rel="noopener">Join IDO on Discord <span class="arrow">&rarr;</span></a>
-  </div>
-</section>
-
-<footer>
-  <div class="wrap">
-    &copy; <span data-year></span> International Dueling Organization. Not affiliated with Roblox Corporation.
-  </div>
-</footer>
-
-<script src="script.js"></script>
-</body>
-</html>
